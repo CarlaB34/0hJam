@@ -15,11 +15,28 @@ public class PlayerController : MonoBehaviour
     private float speedZ = 2;
 
     [SerializeField]
-    private KeyCode joueur1;
-    private KeyCode joeur2;
+    private KeyCode joueur1Up;
+    [SerializeField]
+    private KeyCode joueur1Down;
+    [SerializeField]
+    private KeyCode joueur1Left;
+    [SerializeField]
+    private KeyCode joueur1right;
+    
+    [SerializeField]
+    private KeyCode joeur2Up;
+    [SerializeField]
+    private KeyCode joeur2Down;
+    [SerializeField]
+    private KeyCode joeur2Left;
+    [SerializeField]
+    private KeyCode joeur2Right;
 
     [SerializeField]
     private float couldDown;
+
+    [SerializeField]
+    private GameObject camera;
     private void Start()
     {
         speedVerti = 10;
@@ -36,7 +53,7 @@ public class PlayerController : MonoBehaviour
         if (couldDown <= 0)
         {
             couldDown = 0;
-
+          //  transform.Translate(Vector3.forward * (speedZ * Time.deltaTime));
             Car1();
             Car2();
 
@@ -45,14 +62,15 @@ public class PlayerController : MonoBehaviour
 
     void Car1()
     {
-        if (Input.GetKey(joueur1))
+        transform.Translate(Vector3.forward * (speedZ * Time.deltaTime));
+        if (Input.GetKey(joueur1Up))
         {
             speedVerti = 12;
             transform.position += new Vector3(0f, speedVerti * Time.deltaTime, 0f);
             Debug.Log(speedVerti);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(joueur1Down))
         {
             speedVerti = 8;
             transform.position += new Vector3(0f, -speedVerti * Time.deltaTime, 0f);
@@ -60,11 +78,11 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(joueur1Left))
         {
             transform.position += new Vector3(-speedHori * Time.deltaTime, 0f, 0f);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(joueur1right))
         {
             transform.position += new Vector3(speedHori * Time.deltaTime, 0f, 0f);
         }
@@ -73,17 +91,17 @@ public class PlayerController : MonoBehaviour
     void Car2()
     {
         transform.Translate(Vector3.forward * (speedZ * Time.deltaTime));
-        Debug.Log(speedZ);
+        //Debug.Log(speedZ);
 
 
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(joeur2Up))
         {
             speedVerti = 12;
             transform.position += new Vector3(0f, speedVerti * Time.deltaTime, 0f);
             Debug.Log(speedVerti);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(joeur2Down))
         {
             speedVerti = 8;
             transform.position += new Vector3(0f, -speedVerti * Time.deltaTime, 0f);
@@ -91,11 +109,11 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(joeur2Left))
         {
             transform.position += new Vector3(-speedHori * Time.deltaTime, 0f, 0f);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(joeur2Right))
         {
             transform.position += new Vector3(speedHori * Time.deltaTime, 0f, 0f);
         }
