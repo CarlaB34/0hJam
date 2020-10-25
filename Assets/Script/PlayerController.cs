@@ -4,112 +4,100 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    /*
-    [SerializeField]
-    private float speed;
 
     [SerializeField]
-    private Animator anim;
+    private float speedHori = 5;
 
-    private Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float speedVerti = 10;
+
+    [SerializeField]
+    private float speedZ = 2;
+
+    [SerializeField]
+    private KeyCode joueur1;
+    private KeyCode joeur2;
+
+    [SerializeField]
+    private float couldDown;
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        speedVerti = 10;
+        Debug.Log(speedVerti);
+        
+        
     }
-
-    // Update is called once per frame
     void Update()
     {
+        couldDown -= Time.deltaTime;
+        Debug.Log(couldDown);
+
+        //quand le timer est fini on avance
+        if (couldDown <= 0)
+        {
+            couldDown = 0;
+
+            Car1();
+            Car2();
+
+        }
+    }
+
+    void Car1()
+    {
+        if (Input.GetKey(joueur1))
+        {
+            speedVerti = 12;
+            transform.position += new Vector3(0f, speedVerti * Time.deltaTime, 0f);
+            Debug.Log(speedVerti);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            speedVerti = 8;
+            transform.position += new Vector3(0f, -speedVerti * Time.deltaTime, 0f);
+            Debug.Log(speedVerti);
+        }
+
+
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.position += new Vector3(-speed * Time.deltaTime, 0f, 0f);
-            //rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-
+            transform.position += new Vector3(-speedHori * Time.deltaTime, 0f, 0f);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += new Vector3(speed * Time.deltaTime, 0f, 0f);
-                //rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-            
+            transform.position += new Vector3(speedHori * Time.deltaTime, 0f, 0f);
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-            //rb.AddForce(new Vector3(transform.position.y, 0,0), ForceMode.Impulse);
-            
-        }
-    }*/
-    [SerializeField]
-    private float speedPlayer;
-
-    private Rigidbody rb;
-
-   
-    private Vector3 velocity;
-    private float moveVelocity;
-    private Vector3 moveDirectionX = Vector3.right;
-    private Vector3 moveDirectionZ = Vector3.forward;
-    
-
-   // public Animator march;
-
-    private void Start()
-    {
-       
-        rb = GetComponent<Rigidbody>();
-       // march = GetComponentInChildren<Animator>();
-        //march.SetBool("Take 001", false);
     }
-
-
-    private void Update()
+  
+    void Car2()
     {
-        moveVelocity = 0;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
-        {
-            transform.rotation = Quaternion.Euler(0, -90, 0 * speedPlayer);
-            GetComponent<Rigidbody>().AddForce(moveDirectionX * -speedPlayer, ForceMode.Impulse);
-          //  march.SetBool("Take 001", true);
+        transform.Translate(Vector3.forward * (speedZ * Time.deltaTime));
+        Debug.Log(speedZ);
 
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            speedVerti = 12;
+            transform.position += new Vector3(0f, speedVerti * Time.deltaTime, 0f);
+            Debug.Log(speedVerti);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.rotation = Quaternion.Euler(0, 90, 0 * speedPlayer);
-            //transform.rotation = Quaternion.Euler(0, 90, 0 * speedPlayer);
-            GetComponent<Rigidbody>().AddForce(moveDirectionX * speedPlayer, ForceMode.Impulse);
-
-        }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            transform.rotation = Quaternion.Euler(0, -180, 0 * speedPlayer);
-            GetComponent<Rigidbody>().AddForce(moveDirectionZ * -speedPlayer, ForceMode.Impulse);
-
-
+            speedVerti = 8;
+            transform.position += new Vector3(0f, -speedVerti * Time.deltaTime, 0f);
+            Debug.Log(speedVerti);
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z))
+
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0 * speedPlayer);
-          //  transform.rotation = Quaternion.Euler(0, 0, 0 * speedPlayer);
-            GetComponent<Rigidbody>().AddForce(moveDirectionZ * speedPlayer, ForceMode.Impulse);
-
+            transform.position += new Vector3(-speedHori * Time.deltaTime, 0f, 0f);
         }
-        Vector3 velocity = GetComponent<Rigidbody>().velocity;
-
-        GetComponent<Rigidbody>().velocity = velocity + new Vector3(moveVelocity, 0);
-
-
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.position += new Vector3(speedHori * Time.deltaTime, 0f, 0f);
+        }
     }
-    private void FixedUpdate()
-    {
-        rb.velocity = velocity;
-        //march.SetBool("Take 001", false);
-    }
-
-
-
 }
